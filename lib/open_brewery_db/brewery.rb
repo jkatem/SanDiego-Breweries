@@ -1,16 +1,15 @@
-#class Brewery 
-require 'pry'
-class Brewery
 
+class Brewery
+     
     attr_accessor :id, :name, :brewery_type, :phone, :street, :zip_code, :website_url
 
     @@all = []
     @@name_list = []
     @@type_list = []
 
-    def initialize(brewery_info)
-        brewery_info.each do |k, v|
-            self.send("#{k}=", v) if self.respond_to?("#{k}=")
+    def initialize(brewery)
+        brewery.each do |key, value|
+            self.send("#{key}=", value) if self.respond_to?("#{key}=")
         end
         @@all << self
     end
@@ -37,8 +36,8 @@ class Brewery
 
     def self.build_brewery_type_list
         list = []
-        list << self.all.map do |b|
-            b.brewery_type
+        list << self.all.map do |brewery|
+            brewery.brewery_type
         end
         @@type_list = list.flatten.uniq
     end
@@ -66,6 +65,6 @@ class Brewery
         puts "phone: #{brewery.phone}"
         puts "street: #{brewery.street}, #{brewery.zip_code}"
         puts "website_url: #{brewery.website_url}"
-        puts ""
+        puts " "
     end
 end

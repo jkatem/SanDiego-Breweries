@@ -6,6 +6,12 @@ class Brewery
     @@name_list = []
     @@type_list = []
 
+    def self.breweries_in_sd
+        API.get_breweries.each do |b|
+            Brewery.new(b)
+        end
+    end
+    
     def initialize(brewery_info)
         brewery_info.each do |k, v|
             self.send("#{k}=", v) if self.respond_to?("#{k}=")
@@ -17,11 +23,7 @@ class Brewery
         @@all 
     end
 
-    def self.breweries_in_sd
-        API.get_breweries.each do |b|
-            Brewery.new(b)
-        end
-    end
+    
 
     def self.build_name_list     
         @@name_list << self.all.map.with_index(1) do |brewery, index|     

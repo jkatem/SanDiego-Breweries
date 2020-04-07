@@ -1,21 +1,14 @@
-
 class Brewery
-     
+
     attr_accessor :id, :name, :brewery_type, :phone, :street, :zip_code, :website_url
 
     @@all = []
     @@name_list = []
     @@type_list = []
 
-    def self.breweries_in_sd
-        API.get_breweries.each do |b|
-            Brewery.new(b)
-        end
-    end
-    
-    def initialize(brewery)
-        brewery.each do |key, value|
-            self.send("#{key}=", value) if self.respond_to?("#{key}=")
+    def initialize(brewery_info)
+        brewery_info.each do |k, v|
+            self.send("#{k}=", v) if self.respond_to?("#{k}=")
         end
         @@all << self
     end
@@ -42,8 +35,8 @@ class Brewery
 
     def self.build_brewery_type_list
         list = []
-        list << self.all.map do |brewery|
-            brewery.brewery_type
+        list << self.all.map do |b|
+            b.brewery_type
         end
         @@type_list = list.flatten.uniq
     end
@@ -58,7 +51,8 @@ class Brewery
 
     def self.get_brewery_by_type(type)
         breweries = @@all.select {|b| b.brewery_type == type }
-        breweries.each {|b| Brewery.print_brewery(b)}
+        breweries.each do |b| 
+            Brewery.print_brewery(b)
         end 
     end
 
@@ -70,6 +64,6 @@ class Brewery
         puts "phone: #{brewery.phone}"
         puts "street: #{brewery.street}, #{brewery.zip_code}"
         puts "website_url: #{brewery.website_url}"
-        puts " "
+        puts ""
     end
 end

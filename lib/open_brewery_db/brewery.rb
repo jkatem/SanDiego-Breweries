@@ -58,8 +58,7 @@ class Brewery
 
     def self.get_brewery_by_type(type)
         breweries = @@all.select {|b| b.brewery_type == type }
-        breweries.each do |b| 
-            Brewery.print_brewery(b)
+        breweries.each {|b| Brewery.print_brewery(b)}
         end 
     end
 

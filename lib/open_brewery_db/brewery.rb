@@ -7,6 +7,12 @@ class Brewery
     @@name_list = []
     @@type_list = []
 
+    def self.breweries_in_sd
+        API.get_breweries.each do |b|
+            Brewery.new(b)
+        end
+    end
+    
     def initialize(brewery)
         brewery.each do |key, value|
             self.send("#{key}=", value) if self.respond_to?("#{key}=")
